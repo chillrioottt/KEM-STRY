@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4fafb">
+  <title>Periodic Table — KEM!STRY</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#142629;background:#f4fafb;--primary:#006874;--line:#bfc8ca;--card:#fff;--muted:#526164}
+    *{box-sizing:border-box}body{margin:0;padding:clamp(1rem,3vw,2.5rem);min-width:320px}main{max-width:1440px;margin:auto}
+    h1{margin:0;color:var(--primary);font-size:clamp(1.7rem,4vw,2.5rem)}.intro{color:var(--muted);margin:.35rem 0 1.25rem}
+    .toolbar{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}.toolbar input{font:inherit;padding:.7rem .85rem;border:1px solid #6f797a;border-radius:.5rem;min-width:min(100%,340px);background:white;color:inherit}.count{color:var(--muted);font-size:.9rem}
+    .table-scroll{overflow:auto;padding:.25rem 0 1rem}.grid{display:grid;grid-template-columns:repeat(18,minmax(58px,1fr));grid-template-rows:repeat(9,78px);gap:5px;min-width:1140px}
+    .element{position:relative;text-align:center;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:4px 2px;color:inherit;cursor:pointer;transition:opacity .15s,transform .15s,box-shadow .15s}.element:hover,.element:focus-visible{transform:translateY(-2px);box-shadow:0 3px 10px #09282b26;outline:2px solid var(--primary);outline-offset:1px}.element[hidden]{display:none}
+    .number{display:block;text-align:left;font-size:.67rem;color:var(--muted);line-height:1}.symbol{display:block;font-size:1.2rem;font-weight:800;color:var(--primary);line-height:1.45}.name{display:block;font-size:.62rem;line-height:1.15;overflow-wrap:anywhere}.mass{display:block;font-size:.58rem;color:var(--muted);line-height:1.2}
+    .f-label{grid-column:1 / 4;align-self:center;font-size:.72rem;color:var(--muted);padding-left:.2rem}.detail{display:grid;grid-template-columns:auto 1fr;gap:.25rem 1rem;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.25rem;margin-top:.5rem}.detail-symbol{grid-row:1 / span 2;width:64px;height:64px;display:grid;place-items:center;background:#9eeffd;color:#001f24;border-radius:12px;font-size:1.7rem;font-weight:800}.detail h2{margin:0;font-size:1.2rem}.detail p{margin:0;color:var(--muted);font-size:.92rem}.legend{font-size:.8rem;color:var(--muted);margin:.75rem 0}
+    @media(max-width:600px){.detail{grid-template-columns:1fr}.detail-symbol{grid-row:auto}.toolbar input{width:100%}}
+  </style>
+</head>
+<body>
+<main>
+  <h1>Periodic Table of the Elements</h1>
+  <p class="intro">All 118 currently recognized elements, placed by period and IUPAC group. Select an element for its atomic mass and position.</p>
+  <div class="toolbar"><input id="search" type="search" autocomplete="off" placeholder="Search by element, symbol, or atomic number…" aria-label="Search elements"><span id="count" class="count" aria-live="polite">118 of 118 elements</span></div>
+  <p class="legend">The lanthanoids and actinoids are shown in the two detached rows below the main table. Bracketed masses indicate the mass number of a representative isotope for elements without a standard atomic weight.</p>
+  <div class="table-scroll"><div id="table" class="grid" aria-label="Periodic table"></div></div>
+  <section class="detail" aria-live="polite" aria-label="Selected element details"><div id="detail-symbol" class="detail-symbol">H</div><h2 id="detail-name">Hydrogen (1)</h2><p id="detail-meta">Period 1 · Group 1 · Atomic mass 1.008 u</p></section>
+</main>
+<script>
+  // Atomic masses are standard abridged values; bracketed values are representative isotope mass numbers.
+  const raw = `H|Hydrogen|1.008|1
+He|Helium|4.0026|18
+Li|Lithium|6.94|1
+Be|Beryllium|9.0122|2
+B|Boron|10.81|13
+C|Carbon|12.011|14
+N|Nitrogen|14.007|15
+O|Oxygen|15.999|16
+F|Fluorine|18.998|17
+Ne|Neon|20.180|18
+Na|Sodium|22.990|1
+Mg|Magnesium|24.305|2
+Al|Aluminium|26.982|13
+Si|Silicon|28.085|14
+P|Phosphorus|30.974|15
+S|Sulfur|32.06|16
+Cl|Chlorine|35.45|17
+Ar|Argon|39.948|18
+K|Potassium|39.098|1
+Ca|Calcium|40.078|2
+Sc|Scandium|44.956|3
+Ti|Titanium|47.867|4
+V|Vanadium|50.942|5
+Cr|Chromium|51.996|6
+Mn|Manganese|54.938|7
+Fe|Iron|55.845|8
+Co|Cobalt|58.933|9
+Ni|Nickel|58.693|10
+Cu|Copper|63.546|11
+Zn|Zinc|65.38|12
+Ga|Gallium|69.723|13
+Ge|Germanium|72.630|14
+As|Arsenic|74.922|15
+Se|Selenium|78.971|16
+Br|Bromine|79.904|17
+Kr|Krypton|83.798|18
+Rb|Rubidium|85.468|1
+Sr|Strontium|87.62|2
+Y|Yttrium|88.906|3
+Zr|Zirconium|91.224|4
+Nb|Niobium|92.906|5
+Mo|Molybdenum|95.95|6
+Tc|Technetium|[98]|7
+Ru|Ruthenium|101.07|8
+Rh|Rhodium|102.91|9
+Pd|Palladium|106.42|10
+Ag|Silver|107.87|11
+Cd|Cadmium|112.41|12
+In|Indium|114.82|13
+Sn|Tin|118.71|14
+Sb|Antimony|121.76|15
+Te|Tellurium|127.60|16
+I|Iodine|126.90|17
+Xe|Xenon|131.29|18
+Cs|Caesium|132.91|1
+Ba|Barium|137.33|2
+La|Lanthanum|138.91|3
+Ce|Cerium|140.12|3
+Pr|Praseodymium|140.91|3
+Nd|Neodymium|144.24|3
+Pm|Promethium|[145]|3
+Sm|Samarium|150.36|3
+Eu|Europium|151.96|3
+Gd|Gadolinium|157.25|3
+Tb|Terbium|158.93|3
+Dy|Dysprosium|162.50|3
+Ho|Holmium|164.93|3
+Er|Erbium|167.26|3
+Tm|Thulium|168.93|3
+Yb|Ytterbium|173.05|3
+Lu|Lutetium|174.97|3
+Hf|Hafnium|178.49|4
+Ta|Tantalum|180.95|5
+W|Tungsten|183.84|6
+Re|Rhenium|186.21|7
+Os|Osmium|190.23|8
+Ir|Iridium|192.22|9
+Pt|Platinum|195.08|10
+Au|Gold|196.97|11
+Hg|Mercury|200.59|12
+Tl|Thallium|204.38|13
+Pb|Lead|207.2|14
+Bi|Bismuth|208.98|15
+Po|Polonium|[209]|16
+At|Astatine|[210]|17
+Rn|Radon|[222]|18
+Fr|Francium|[223]|1
+Ra|Radium|[226]|2
+Ac|Actinium|[227]|3
+Th|Thorium|232.04|3
+Pa|Protactinium|231.04|3
+U|Uranium|238.03|3
+Np|Neptunium|[237]|3
+Pu|Plutonium|[244]|3
+Am|Americium|[243]|3
+Cm|Curium|[247]|3
+Bk|Berkelium|[247]|3
+Cf|Californium|[251]|3
+Es|Einsteinium|[252]|3
+Fm|Fermium|[257]|3
+Md|Mendelevium|[258]|3
+No|Nobelium|[259]|3
+Lr|Lawrencium|[266]|3
+Rf|Rutherfordium|[267]|4
+Db|Dubnium|[268]|5
+Sg|Seaborgium|[269]|6
+Bh|Bohrium|[270]|7
+Hs|Hassium|[269]|8
+Mt|Meitnerium|[278]|9
+Ds|Darmstadtium|[281]|10
+Rg|Roentgenium|[282]|11
+Cn|Copernicium|[285]|12
+Nh|Nihonium|[286]|13
+Fl|Flerovium|[289]|14
+Mc|Moscovium|[290]|15
+Lv|Livermorium|[293]|16
+Ts|Tennessine|[294]|17
+Og|Oganesson|[294]|18`;
+  const elements = raw.split('\n').map((line, index) => {
+    const [symbol, name, mass, group] = line.split('|');
+    return { number: index + 1, symbol, name, mass, group: Number(group) };
+  });
+  const periodOf = n => n === 1 ? 1 : n <= 2 ? 1 : n <= 10 ? 2 : n <= 18 ? 3 : n <= 36 ? 4 : n <= 54 ? 5 : n <= 86 ? 6 : 7;
+  const table = document.getElementById('table');
+  const count = document.getElementById('count');
+  const search = document.getElementById('search');
+  function positionFor(element) {
+    const n = element.number;
+    if (n >= 58 && n <= 71) return { row: 8, column: n - 54 };
+    if (n >= 90 && n <= 103) return { row: 9, column: n - 86 };
+    return { row: periodOf(n), column: element.group };
+  }
+  function selectElement(element) {
+    document.getElementById('detail-symbol').textContent = element.symbol;
+    document.getElementById('detail-name').textContent = `${element.name} (${element.number})`;
+    const period = periodOf(element.number);
+    const groupText = element.number >= 58 && element.number <= 71 || element.number >= 90 && element.number <= 103 ? 'f-block series' : `Group ${element.group}`;
+    document.getElementById('detail-meta').textContent = `Period ${period} · ${groupText} · Atomic mass ${element.mass} u`;
+  }
+  elements.forEach(element => {
+    const { row, column } = positionFor(element);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'element';
+    button.style.gridRow = row;
+    button.style.gridColumn = column;
+    button.dataset.search = `${element.number} ${element.symbol} ${element.name}`.toLowerCase();
+    button.setAttribute('aria-label', `${element.name}, atomic number ${element.number}, atomic mass ${element.mass}`);
+    button.innerHTML = `<span class="number">${element.number}</span><span class="symbol">${element.symbol}</span><span class="name">${element.name}</span><span class="mass">${element.mass}</span>`;
+    button.addEventListener('click', () => selectElement(element));
+    table.appendChild(button);
+  });
+  [['Lanthanoids', 8], ['Actinoids', 9]].forEach(([label, row]) => {
+    const item = document.createElement('div'); item.className = 'f-label'; item.style.gridRow = row; item.textContent = label; table.appendChild(item);
+  });
+  search.addEventListener('input', () => {
+    const query = search.value.trim().toLowerCase();
+    let visible = 0;
+    table.querySelectorAll('.element').forEach(button => {
+      const matches = button.dataset.search.includes(query);
+      button.hidden = !matches;
+      if (matches) visible++;
+    });
+    count.textContent = `${visible} of 118 elements`;
+  });
+  selectElement(elements[0]);
+</script>
+</body>
+</html>
