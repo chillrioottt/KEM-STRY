@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEM!STRY — Unified CBSE Chemistry Platform</title>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           MATERIAL YOU (M3) TONAL PALETTE — CYAN THEME
+           ========================================================================== */
+        :root {
+            --md-sys-color-primary: #006874;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #9eeffd;
+            --md-sys-color-on-primary-container: #001f24;
+            
+            --md-sys-color-secondary: #4a6267;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #cde7ec;
+            --md-sys-color-on-secondary-container: #051f23;
+            
+            --md-sys-color-tertiary: #525e7d;
+            --md-sys-color-on-tertiary: #ffffff;
+            --md-sys-color-tertiary-container: #dae2ff;
+            --md-sys-color-on-tertiary-container: #0e1b37;
+            
+            --md-sys-color-surface: #f4fafb;
+            --md-sys-color-surface-dim: #d5dbdc;
+            --md-sys-color-surface-bright: #f4fafb;
+            --md-sys-color-surface-container-lowest: #ffffff;
+            --md-sys-color-surface-container-low: #eef5f6;
+            --md-sys-color-surface-container: #e8eff0;
+            --md-sys-color-surface-container-high: #e2e9ea;
+            --md-sys-color-surface-container-highest: #dce4e5;
+            
+            --md-sys-color-on-surface: #161d1e;
+            --md-sys-color-on-surface-variant: #3f484a;
+            --md-sys-color-outline: #6f797a;
+            --md-sys-color-outline-variant: #bfc8ca;
+
+            --md-shape-corner-extra-small: 4px;
+            --md-shape-corner-small: 8px;
+            --md-shape-corner-medium: 12px;
+            --md-shape-corner-large: 16px;
+            --md-shape-corner-extra-large: 28px;
+            --md-shape-corner-full: 9999px;
+
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* Dark Mode Material You Surface */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --md-sys-color-primary: #82d5e4;
+                --md-sys-color-on-primary: #00363d;
+                --md-sys-color-primary-container: #004f58;
+                --md-sys-color-on-primary-container: #9eeffd;
+
+                --md-sys-color-secondary: #b1cbd0;
+                --md-sys-color-on-secondary: #1c3438;
+                --md-sys-color-secondary-container: #334b4f;
+                --md-sys-color-on-secondary-container: #cde7ec;
+
+                --md-sys-color-surface: #0e1516;
+                --md-sys-color-surface-container-lowest: #090f11;
+                --md-sys-color-surface-container-low: #161d1e;
+                --md-sys-color-surface-container: #1a2123;
+                --md-sys-color-surface-container-high: #252c2d;
+                --md-sys-color-surface-container-highest: #2f3638;
+
+                --md-sys-color-on-surface: #dde4e5;
+                --md-sys-color-on-surface-variant: #bfc8ca;
+                --md-sys-color-outline: #899294;
+                --md-sys-color-outline-variant: #3f484a;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top App Bar */
+        .top-app-bar {
+            background-color: var(--md-sys-color-surface-container-low);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-title span.excl {
+            color: var(--md-sys-color-primary);
+            background: var(--md-sys-color-primary-container);
+            padding: 2px 8px;
+            border-radius: var(--md-shape-corner-medium);
+        }
+
+        /* Material Segmented Navigation Pills */
+        .nav-container {
+            max-width: 1300px;
+            margin: 1.5rem auto 0;
+            width: calc(100% - 2rem);
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .nav-pill {
+            background: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-on-surface-variant);
+            border: 1px solid transparent;
+            padding: 0.6rem 1.4rem;
+            border-radius: var(--md-shape-corner-full);
+            font-family: var(--font-sans);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .nav-pill:hover {
+            background: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .nav-pill.active {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        /* Viewport Canvas */
+        .main-canvas {
+            max-width: 1300px;
+            margin: 1.5rem auto 4rem;
+            width: calc(100% - 2rem);
+            flex: 1;
+        }
+
+        .view-content {
+            display: none;
+            animation: m3Fade 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+        }
+
+        .view-content.active {
+            display: block;
+        }
+
+        @keyframes m3Fade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Material You Elevated Cards */
+        .m3-card {
+            background: var(--md-sys-color-surface-container-lowest);
+            border-radius: var(--md-shape-corner-extra-large);
+            padding: 2rem;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .m3-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .m3-card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.25;
+        }
+
+        .m3-card-subtitle {
+            font-size: 0.88rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: 4px;
+        }
+
+        .m3-chip {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: var(--md-shape-corner-full);
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            letter-spacing: 0.5px;
+        }
+
+        /* Filter Chips Bar */
+        .chips-scroll {
+            display: flex;
+            gap: 0.6rem;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-chip {
+            background: transparent;
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 6px 16px;
+            border-radius: var(--md-shape-corner-small);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .filter-chip.active {
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            border-color: var(--md-sys-color-secondary-container);
+        }
+
+        /* Reaction Record Styling */
+        .reaction-item {
+            background: var(--md-sys-color-surface-container-low);
+            border-radius: var(--md-shape-corner-large);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: transform 0.2s;
+        }
+
+        .reaction-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .reaction-eq {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .reaction-notes {
+            font-size: 0.88rem;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .reaction-meta {
+            display: flex;
+            gap: 8px;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        /* Interactive Playground Stage */
+        .interactive-container {
+            background: var(--md-sys-color-surface-container);
+            border-radius: var(--md-shape-corner-large);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Carbon Bonding Hybridization Sandbox */
+        .covalency-stage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .orbital-visualizer {
+            background: var(--md-sys-color-surface-container-lowest);
+            border-radius: var(--md-shape-corner-large);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .orbital-circle-diagram {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 1rem auto;
+            border: 3px dashed var(--md-sys-color-primary);
+            display: grid;
+            place-content: center;
+            position: relative;
+        }
+
+        /* Material Accordion */
+        .accordion-item {
+            background: var(--md-sys-color-surface-container-low);
+            border-radius: var(--md-shape-corner-medium);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .accordion-trigger {
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            background: transparent;
+            border: none;
+            text-align: left;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            padding: 0 1.5rem 1.5rem;
+            display: none;
+            font-size: 0.92rem;
+            color: var(--md-sys-color-on-surface-variant);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+        }
+
+        .accordion-content.open {
+            display: block;
+        }
+
+        /* Material Button */
+        .m3-btn {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            padding: 8px 20px;
+            border-radius: var(--md-shape-corner-full);
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .m3-btn:hover {
+            filter: brightness(1.1);
+        }
+
+        .m3-input {
+            background: var(--md-sys-color-surface-container-highest);
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-surface);
+            padding: 8px 14px;
+            border-radius: var(--md-shape-corner-small);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+        }
+
+        .m3-input:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background: var(--md-sys-color-surface-container-low);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .agpl-notice {
+            max-width: 800px;
+            margin: 1rem auto 0;
+            padding: 0.8rem 1.2rem;
+            background: var(--md-sys-color-surface-container);
+            border-radius: var(--md-shape-corner-medium);
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        .agpl-notice a {
+            color: var(--md-sys-color-primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Material 3 Top App Bar -->
+    <header class="top-app-bar">
+        <a href="#" class="brand-title">
+            KEM<span class="excl">!</span>STRY
+        </a>
+        <div style="font-size: 0.85rem; font-weight: 600; color: var(--md-sys-color-primary);">
+            CBSE CHEMISTRY CURRICULUM // CL 8–12
+        </div>
+    </header>
+
+    <!-- Material 3 Segmented Pill Navigation Bar -->
+    <nav class="nav-container">
+        <button class="nav-pill active" onclick="navigateTab('summaries', this)">Chapter Summaries (8–12)</button>
+        <button class="nav-pill" onclick="navigateTab('reactions', this)">Reactions Vault (Upto Class 10)</button>
+        <button class="nav-pill" onclick="navigateTab('organic', this)">Organic Chemistry (10–12)</button>
+        <button class="nav-pill" onclick="navigateTab('ptable', this)">Periodic Matrix (118)</button>
+        <button class="nav-pill" onclick="navigateTab('interactive', this)">Interactive Labs</button>
+    </nav>
+
+    <div class="main-canvas">
+
+        <!-- =========================================================================
+             SECTION 1: CHAPTER-WISE SUMMARIES FOR EVERY CHAPTER (CLASSES 8 TO 12)
+             ========================================================================= -->
+        <section id="view-summaries" class="view-content active">
+            <div class="m3-card">
+                <div class="m3-card-header">
+                    <div>
+                        <h2 class="m3-card-title">Chapter-Wise Curriculum Summaries</h2>
+                        <p class="m3-card-subtitle">Comprehensive NCERT & StudyRankers-aligned conceptual breakdown for every single chapter from Class 8 through 12.</p>
+                    </div>
+                    <span class="m3-chip">CLASSES 8–12 UNIFIED</span>
+                </div>
+
+                <!-- Class Filter Chips -->
+                <div class="chips-scroll">
+                    <button class="filter-chip active" onclick="filterClassSummaries('all', this)">All Classes</button>
+                    <button class="filter-chip" onclick="filterClassSummaries('cl8', this)">Class 8</button>
+                    <button class="filter-chip" onclick="filterClassSummaries('cl9', this)">Class 9</button>
+                    <button class="filter-chip" onclick="filterClassSummaries('cl10', this)">Class 10</button>
+                    <button class="filter-chip" onclick="filterClassSummaries('cl11', this)">Class 11</button>
+                    <button class="filter-chip" onclick="filterClassSummaries('cl12', this)">Class 12</button>
+                </div>
+
+                <div id="summariesAccordion">
+
+                    <!-- CLASS 8 CHAPTERS -->
+                    <div class="accordion-item sum-item cl8">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 8] Materials: Metals and Non-Metals</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Physical Characteristics:</strong> Metals are malleable (can be beaten into thin sheets, Gold/Silver are most malleable), ductile (drawn into wires), sonorous (ring when struck), and good conductors of heat and electricity. Non-metals (Carbon, Sulfur, Phosphorus) are brittle and poor conductors (graphite is an exception).</p>
+                            <p style="margin-top:6px;"><strong>Chemical Properties:</strong> Metals react with oxygen to yield basic oxides (e.g., $2Mg + O_2 \to 2MgO$; turns red litmus blue). Non-metals form acidic oxides ($S + O_2 \to SO_2$, producing sulfurous acid $H_2SO_3$ in water). Metals react with dilute acids to produce hydrogen gas ($H_2$ pops with a burning splinter), while non-metals generally do not.</p>
+                            <p style="margin-top:6px;"><strong>Displacement Protocol:</strong> A more reactive metal replaces a less reactive metal from its aqueous salt solution ($Fe + CuSO_4 \to FeSO_4 + Cu$; blue solution turns pale green).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl8">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 8] Coal and Petroleum</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Exhaustible Natural Resources:</strong> Fossil fuels formed over millions of years through carbonisation (slow conversion of dead vegetation into coal under extreme heat and pressure).</p>
+                            <p style="margin-top:6px;"><strong>Fractional Distillation of Petroleum:</strong> Petroleum is separated based on boiling point differentials: Petroleum gas (LPG), Petrol, Kerosene (jet fuel), Diesel, Lubricating oil, Paraffin wax, and Bitumen (used for road surfacing).</p>
+                            <p style="margin-top:6px;"><strong>Destructive Distillation of Coal:</strong> Heating coal in the absence of air yields Coke (almost pure carbon), Coal Tar (thick liquid used in dyes/drugs), and Coal Gas (fuel).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl8">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 8] Combustion and Flame</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Conditions for Combustion:</strong> 1. Fuel, 2. Air (Oxygen), 3. Ignition Temperature (minimum temperature to catch fire). The fire triangle dictates that removing any of these three extinguishes the fire.</p>
+                            <p style="margin-top:6px;"><strong>Flame Architecture:</strong> 1. Innermost Zone (unburnt wax vapors, dark, least hot), 2. Middle Zone (partial combustion, yellow, luminous, moderately hot), 3. Outermost Non-luminous Zone (complete combustion, blue, hottest part, goldsmiths use this zone).</p>
+                            <p style="margin-top:6px;"><strong>Calorific Value:</strong> Heat produced by complete combustion of 1 kg of fuel (kJ/kg). Hydrogen holds the highest calorific value ($150,000 \text{ kJ/kg}$).</p>
+                        </div>
+                    </div>
+
+                    <!-- CLASS 9 CHAPTERS -->
+                    <div class="accordion-item sum-item cl9">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 9] Matter in Our Surroundings</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Kinetic Molecular Theory:</strong> Matter particles possess kinetic energy, continuous motion, and intermolecular forces. Solid &gt; Liquid &gt; Gas in intermolecular forces; Gas &gt; Liquid &gt; Solid in kinetic energy.</p>
+                            <p style="margin-top:6px;"><strong>Latent Heat:</strong> Latent heat of fusion (heat required to turn 1 kg solid to liquid at melting point) and Latent heat of vaporization (liquid to gas at boiling point without temperature change). Steam causes more severe burns than boiling water at 100°C due to excess latent heat.</p>
+                            <p style="margin-top:6px;"><strong>Evaporation Factors:</strong> Rate increases with surface area, temperature, and wind speed; decreases with humidity. Evaporation causes cooling.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl9">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 9] Is Matter Around Us Pure?</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Classification:</strong> Pure Substances (Elements and Compounds) vs. Mixtures (Homogeneous solutions and Heterogeneous suspensions/colloids).</p>
+                            <p style="margin-top:6px;"><strong>Colloids & Tyndall Effect:</strong> Heterogeneous mixtures with particle size between $1\text{ nm}$ and $1000\text{ nm}$. They scatter light (Tyndall effect) and do not settle under gravity. Examples: milk, fog, smoke.</p>
+                            <p style="margin-top:6px;"><strong>Concentration Expressions:</strong> $\text{Mass \%} = (\text{Mass of solute} / \text{Mass of solution}) \times 100$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl9">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 9] Atoms and Molecules</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Fundamental Laws:</strong> 1. Law of Conservation of Mass (Lavoisier), 2. Law of Definite Proportions (Proust — in a chemical substance, elements combine in fixed ratio by mass, e.g., $H_2O$ is always $1:8$).</p>
+                            <p style="margin-top:6px;"><strong>Mole Concept:</strong> $1 \text{ mole} = 6.022 \times 10^{23} \text{ particles} (N_A)$. Molar mass in grams equals atomic/molecular mass in unified atomic mass units (u). $n = m / M = N / N_A$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl9">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 9] Structure of the Atom</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Atomic Models Evolution:</strong> Thomson's Plum Pudding $\to$ Rutherford's $\alpha$-particle scattering (discovered positive, dense nucleus) $\to$ Bohr's discrete energy levels ($K, L, M, N$ shells with capacity $2n^2$).</p>
+                            <p style="margin-top:6px;"><strong>Isotopes vs. Isobars:</strong> Isotopes have identical atomic number ($Z$) but different mass numbers ($A$), e.g., $^{35}_{17}Cl$ and $^{37}_{17}Cl$. Isobars have identical mass number ($A$) but different atomic numbers ($Z$), e.g., $^{40}_{18}Ar$ and $^{40}_{20}Ca$.</p>
+                        </div>
+                    </div>
+
+                    <!-- CLASS 10 CHAPTERS -->
+                    <div class="accordion-item sum-item cl10">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 10] Chemical Reactions and Equations</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Reaction Taxonomies:</strong> Combination, Decomposition (thermal, electrolytic, photolytic), Displacement, Double Displacement (precipitation & neutralization), and Redox (oxidation is loss of $e^-$ / gain of $O$; reduction is gain of $e^-$ / gain of $H$).</p>
+                            <p style="margin-top:6px;"><strong>Oxidative Degradation:</strong> Corrosion ($4Fe + 3O_2 + 2xH_2O \to 2Fe_2O_3 \cdot xH_2O$, rust) and Rancidity (aerial oxidation of fats and oils prevented using nitrogen gas or antioxidants like BHA).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl10">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 10] Acids, Bases and Salts</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Arrhenius Fundamentals:</strong> Acids produce $H^+(aq)$ / $H_3O^+$ ions; bases produce $OH^-(aq)$ ions. $pH = -\log_{10}[H^+]$. Range: 0 to 14.</p>
+                            <p style="margin-top:6px;"><strong>Industrial Salts:</strong></p>
+                            <ul style="padding-left:1.2rem; margin-top:4px;">
+                                <li>Bleaching Powder: $Ca(OH)_2 + Cl_2 \to CaOCl_2 + H_2O$.</li>
+                                <li>Baking Soda: $NaCl + H_2O + CO_2 + NH_3 \to NH_4Cl + NaHCO_3$.</li>
+                                <li>Washing Soda: $Na_2CO_3 \cdot 10H_2O$.</li>
+                                <li>Plaster of Paris: $CaSO_4 \cdot \frac{1}{2}H_2O$ (obtained by heating gypsum at 373 K).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl10">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 10] Metals and Non-Metals</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Reactivity Series:</strong> $K > Na > Ca > Mg > Al > Zn > Fe > Pb > [H] > Cu > Hg > Ag > Au$.</p>
+                            <p style="margin-top:6px;"><strong>Ionic Bonding:</strong> Electrostatic attraction formed by complete valence electron transfer (e.g., $Na \to Na^+ + e^-$, $Cl + e^- \to Cl^-$). Ionic solids exhibit high melting points, brittle crystal lattices, and conduct electricity only in molten or aqueous states.</p>
+                            <p style="margin-top:6px;"><strong>Metallurgy:</strong> Roasting (sulfide ores heated in excess air) vs. Calcination (carbonate ores heated in limited air). Thermite process: $Fe_2O_3 + 2Al \to 2Fe + Al_2O_3 + \text{heat}$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl10">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 10] Carbon and its Compounds</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Covalent Tetravalency:</strong> Carbon shares 4 electrons to form stable octets. Catenation allows self-linking into chains, branches, and rings.</p>
+                            <p style="margin-top:6px;"><strong>Homologous Series:</strong> Successive members differ by $-CH_2-$ unit ($14\text{ u}$). Alkanes ($C_nH_{2n+2}$), Alkenes ($C_nH_{2n}$), Alkynes ($C_nH_{2n-2}$).</p>
+                            <p style="margin-top:6px;"><strong>Soaps & Micelles:</strong> Sodium/potassium salts of long-chain fatty acids. Hydrophobic hydrocarbon tail binds grease; hydrophilic carboxylate head interacts with water.</p>
+                        </div>
+                    </div>
+
+                    <!-- CLASS 11 CHAPTERS -->
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Some Basic Concepts of Chemistry</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Stoichiometry & Limiting Reagent:</strong> The reactant consumed entirely limits product yield.</p>
+                            <p style="margin-top:6px;"><strong>Concentration Expressions:</strong></p>
+                            <ul style="padding-left:1.2rem;">
+                                <li>Molarity ($M$): $\text{Moles of solute} / \text{Volume of solution in L}$ (Temperature dependent).</li>
+                                <li>Molality ($m$): $\text{Moles of solute} / \text{Mass of solvent in kg}$ (Temperature independent).</li>
+                                <li>Mole Fraction ($x_A$): $n_A / (n_A + n_B)$.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Structure of Atom</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Wave Mechanics:</strong> de Broglie wavelength $\lambda = h / mv$; Heisenberg Uncertainty $\Delta x \cdot \Delta p \ge h / 4\pi$.</p>
+                            <p style="margin-top:6px;"><strong>Quantum Numbers:</strong> Principal ($n$), Azimuthal ($l = 0 \dots n-1$), Magnetic ($m_l = -l \dots +l$), Spin ($m_s = \pm 1/2$).</p>
+                            <p style="margin-top:6px;"><strong>Orbital Rules:</strong> Aufbau Principle ($1s \to 2s \to 2p \dots$), Pauli Exclusion (no two electrons have identical 4 quantum numbers), Hund's Rule (maximum multiplicity in degenerate orbitals).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Classification of Elements & Periodicity</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Periodic Trends:</strong></p>
+                            <ul style="padding-left:1.2rem;">
+                                <li>Atomic Radius: Decreases across period (increasing $Z_{eff}$); increases down group.</li>
+                                <li>Ionization Enthalpy: Anomalies at $Be > B$ (full $2s^2$) and $N > O$ (half-filled $2p^3$).</li>
+                                <li>Electron Gain Enthalpy: Chlorine has more negative $\Delta_{eg}H$ than Fluorine due to Fluorine's compact $2p$ subshell having strong inter-electronic repulsions.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Chemical Bonding and Molecular Structure</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>VSEPR & Hybridisation:</strong> Molecular geometries dictated by lone pair/bond pair repulsion ($LP-LP > LP-BP > BP-BP$). $sp$ (linear, 180°), $sp^2$ (trigonal planar, 120°), $sp^3$ (tetrahedral, 109.5°), $sp^3d$ (trigonal bipyramidal), $sp^3d^2$ (octahedral).</p>
+                            <p style="margin-top:6px;"><strong>Molecular Orbital Theory:</strong> Bond Order $= \frac{1}{2}(N_b - N_a)$. Diamagnetic if all paired; paramagnetic if unpaired electrons exist (e.g., $O_2$ has 2 unpaired electrons in $\pi^*2p$ orbitals).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Chemical Thermodynamics</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>First & Second Laws:</strong> $\Delta U = q + w$; Enthalpy $H = U + pV$.</p>
+                            <p style="margin-top:6px;"><strong>Spontaneity & Gibbs Energy:</strong> $\Delta G = \Delta H - T\Delta S$. A reaction is spontaneous when $\Delta G < 0$. At equilibrium, $\Delta G^\circ = -RT \ln K$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Equilibrium</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Le Chatelier's Principle:</strong> A system at equilibrium responds to stress (concentration, temperature, pressure) by shifting in the direction that counteracts the perturbation.</p>
+                            <p style="margin-top:6px;"><strong>Ionic Equilibrium:</strong> Henderson-Hasselbalch buffer equation $pH = pK_a + \log([\text{Salt}]/[\text{Acid}])$. Solubility Product $K_{sp}$; precipitation occurs when Ionic Product ($Q_{sp}$) exceeds $K_{sp}$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Redox Reactions</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Oxidation Number Tracking:</strong> Rules for calculating formal oxidation states. Balancing via Ion-Electron method in acidic ($H^+/H_2O$) and alkaline ($OH^-/H_2O$) media.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Organic Chemistry: Basic Principles & Techniques</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Electronic Displacement Effects:</strong> Inductive ($+I, -I$), Electromeric ($E$), Resonance ($+R, -R$), and Hyperconjugation ($\sigma$-$\pi$ conjugation). Carbocation stability: $3^\circ > 2^\circ > 1^\circ > \text{CH}_3^+$.</p>
+                            <p style="margin-top:6px;"><strong>Purification Methods:</strong> Fractional distillation, steam distillation, and chromatography ($R_f$ value).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl11">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 11] Hydrocarbons</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Alkanes:</strong> Free radical halogenation mechanism. Wurtz reaction: $2RX + 2Na \to R-R + 2NaX$.</p>
+                            <p style="margin-top:6px;"><strong>Alkenes & Alkynes:</strong> Markovnikov's Addition (electrophile adds to carbon with more hydrogens) vs. Anti-Markovnikov Kharasch Peroxide Effect ($HBr + \text{peroxide}$). Ozonolysis cleavage produces carbonyl compounds.</p>
+                            <p style="margin-top:6px;"><strong>Aromaticity:</strong> Hückel's Rule ($4n + 2$ $\pi$-electrons in a planar ring). Electrophilic aromatic substitution: nitration, halogenation, Friedel-Crafts alkylation/acylation.</p>
+                        </div>
+                    </div>
+
+                    <!-- CLASS 12 CHAPTERS -->
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Solutions</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Raoult's Law:</strong> $p_1 = p_1^\circ x_1$. Ideal solutions exhibit $\Delta H_{mix} = 0, \Delta V_{mix} = 0$. Positive deviation (weaker solute-solvent interaction, e.g., Ethanol + Acetone); Negative deviation (stronger solute-solvent hydrogen bonds, e.g., Chloroform + Acetone).</p>
+                            <p style="margin-top:6px;"><strong>Colligative Properties & van 't Hoff Factor:</strong> $\Delta T_b = i K_b m$; $\Delta T_f = i K_f m$; $\Pi = i C R T$. For dissociation: $\alpha = (i - 1) / (n - 1)$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Electrochemistry</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Nernst Formulation:</strong> $E_{cell} = E^\circ_{cell} - \frac{0.0591}{n} \log Q$ at 298 K. $\Delta G^\circ = -n F E^\circ_{cell} = -RT \ln K_c$.</p>
+                            <p style="margin-top:6px;"><strong>Conductivity:</strong> $\kappa = \frac{1}{R} \cdot \frac{l}{A}$; $\Lambda_m = \frac{\kappa \times 1000}{M}$. Kohlrausch's Law: $\Lambda^\circ_m = \nu_+ \lambda^\circ_+ + \nu_- \lambda^\circ_-$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Chemical Kinetics</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Integrated Rate Laws:</strong> Zero Order: $k = ([R]_0 - [R]) / t$, $t_{1/2} = [R]_0 / 2k$. First Order: $k = \frac{2.303}{t} \log \frac{[R]_0}{[R]}$, $t_{1/2} = 0.693 / k$.</p>
+                            <p style="margin-top:6px;"><strong>Arrhenius Equation:</strong> $k = A e^{-E_a / RT}$; $\log \frac{k_2}{k_1} = \frac{E_a}{2.303R} \left( \frac{T_2 - T_1}{T_1 T_2} \right)$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] The d- and f-Block Elements</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>3d Series Highlights:</strong> Variable oxidation states, catalytic behavior, alloy formation, colored ions via $d$-$d$ transitions. Positive $E^\circ(Cu^{2+}/Cu) = +0.34\text{ V}$.</p>
+                            <p style="margin-top:6px;"><strong>Lanthanoid Contraction:</strong> Ineffective $4f$ nuclear shielding causes continuous radius decrease, rendering $Zr$ (160 pm) $\approx$ $Hf$ (159 pm) radii almost identical.</p>
+                            <p style="margin-top:6px;"><strong>Oxidizing Reagents:</strong> $K_2Cr_2O_7$ (dichromate) and $KMnO_4$ (permanganate; intense color is due to Ligand-to-Metal Charge Transfer, not $d$-$d$ transition).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Coordination Compounds</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Crystal Field Theory (CFT):</strong> Splitting of $d$-orbitals in octahedral ($\Delta_\circ$, $t_{2g}$ vs. $e_g$) and tetrahedral fields ($\Delta_t = \frac{4}{9}\Delta_\circ$).</p>
+                            <p style="margin-top:6px;"><strong>Spectrochemical Series:</strong> $I^- < Br^- < Cl^- < F^- < OH^- < H_2O < NH_3 < en < CN^- < CO$. Strong field ligands induce pairing ($P < \Delta_\circ$). Spin-only formula: $\mu = \sqrt{n(n+2)}\text{ BM}$.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Haloalkanes and Haloarenes</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Nucleophilic Substitution:</strong> $S_N2$ (bimolecular, single-step backside attack, complete Walden inversion, order: $1^\circ > 2^\circ > 3^\circ$) vs. $S_N1$ (unimolecular, carbocation intermediate, racemization, order: $3^\circ > 2^\circ > 1^\circ$).</p>
+                            <p style="margin-top:6px;"><strong>Haloarene Inertness:</strong> Low reactivity toward nucleophiles due to resonance partial double-bond character of $C-Cl$ and $sp^2$ carbon hybridization.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Alcohols, Phenols and Ethers</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Key Reactions:</strong> Hydroboration-oxidation (anti-Markovnikov hydration), Lucas Test ($ZnCl_2 + \text{conc. } HCl$: $3^\circ$ alcohol produces turbidity instantly).</p>
+                            <p style="margin-top:6px;"><strong>Phenols:</strong> More acidic than alcohols due to phenoxide resonance. Kolbe's Reaction (Salicylic acid) and Reimer-Tiemann Reaction (Salicylaldehyde with $CHCl_3 + NaOH$). Williamson Ether Synthesis ($R-X + R'-ONa \to R-O-R'$).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Aldehydes, Ketones and Carboxylic Acids</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Carbonyl Reactivity:</strong> Nucleophilic addition across $>C=O$.</p>
+                            <p style="margin-top:6px;"><strong>Distinction Tests:</strong> Tollens' mirror test and Fehling's red $Cu_2O$ test (positive for aldehydes, negative for ketones). Iodoform test for $CH_3-C=O$.</p>
+                            <p style="margin-top:6px;"><strong>Named Reactions:</strong> Aldol Condensation ($\alpha$-hydrogen present) vs. Cannizzaro Reaction (no $\alpha$-hydrogen; disproportionation in conc. $NaOH$). Hell-Volhard-Zelinsky (HVZ) $\alpha$-halogenation.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Amines</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Basicity:</strong> In aqueous solution: $(CH_3)_2NH > CH_3NH_2 > (CH_3)_3N > NH_3$. Aniline is a weaker base due to nitrogen lone pair delocalization into the aromatic ring.</p>
+                            <p style="margin-top:6px;"><strong>Named Syntheses:</strong> Gabriel Phthalimide Synthesis (pure aliphatic $1^\circ$ amines only); Hoffmann Bromamide Degradation ($R-CONH_2 + Br_2 + 4KOH \to R-NH_2 + K_2CO_3$, descent of carbon chain). Carbylamine test ($1^\circ$ amines yield foul isocyanide).</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item sum-item cl12">
+                        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                            <span>[Class 12] Biomolecules</span>
+                            <span>▾</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Carbohydrates:</strong> D-Glucose open-chain vs. $\alpha$/$\beta$-anomers; glycosidic linkage in sucrose (non-reducing), starch, cellulose.</p>
+                            <p style="margin-top:6px;"><strong>Proteins & Nucleic Acids:</strong> $\alpha$-amino acids linked via peptide bonds ($-CO-NH-$). Denaturation disrupts $2^\circ$ and $3^\circ$ structures while leaving primary sequence intact. DNA (double-helix with Adenine=Thymine, Guanine≡Cytosine) vs. RNA (Uracil replaces Thymine).</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             SECTION 2: ALL CHEMICAL REACTIONS UP TO CLASS 10 (COMPLETE VAULT)
+             ========================================================================= -->
+        <section id="view-reactions" class="view-content">
+            <div class="m3-card">
+                <div class="m3-card-header">
+                    <div>
+                        <h2 class="m3-card-title">Chemical Reactions Master Vault (Classes 8–10)</h2>
+                        <p class="m3-card-subtitle">Every balanced chemical equation, thermal/photolytic decomposition, redox, acid-base, and metallurgy reaction in the secondary syllabus.</p>
+                    </div>
+                    <span class="m3-chip">SECONDARY NCERT COMPLETE</span>
+                </div>
+
+                <div class="chips-scroll">
+                    <button class="filter-chip active" onclick="filterReactions('all', this)">All Reactions</button>
+                    <button class="filter-chip" onclick="filterReactions('comb', this)">Combination</button>
+                    <button class="filter-chip" onclick="filterReactions('decomp', this)">Decomposition</button>
+                    <button class="filter-chip" onclick="filterReactions('disp', this)">Displacement</button>
+                    <button class="filter-chip" onclick="filterReactions('acidbase', this)">Acids, Bases & Salts</button>
+                    <button class="filter-chip" onclick="filterReactions('carbon', this)">Carbon & Compounds</button>
+                </div>
+
+                <div id="reactionsList">
+                    <!-- Combination -->
+                    <div class="reaction-item rx-item comb">
+                        <div class="reaction-eq">CaO(s) + H₂O(l) → Ca(OH)₂(aq) + Heat</div>
+                        <div class="reaction-notes"><strong>Slaking of Lime:</strong> Vigorous exothermic combination. Quicklime ($CaO$) reacts with water to form slaked lime ($Ca(OH)_2$), used for whitewashing walls.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Exothermic</span><span class="m3-chip">Class 10 Ch 1</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item comb">
+                        <div class="reaction-eq">Ca(OH)₂(aq) + CO₂(g) → CaCO₃(s)↓ + H₂O(l)</div>
+                        <div class="reaction-notes"><strong>Limewater Carbon Dioxide Test:</strong> Limewater turns milky due to insoluble calcium carbonate precipitate. With excess $CO_2$, milkiness dissolves: $CaCO_3 + H_2O + CO_2 \to Ca(HCO_3)_2(aq)$.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Precipitation</span><span class="m3-chip">Class 10 Ch 1/2</span></div>
+                    </div>
+
+                    <!-- Decomposition -->
+                    <div class="reaction-item rx-item decomp">
+                        <div class="reaction-eq">2FeSO₄(s) —Δ→ Fe₂O₃(s) + SO₂(g) + SO₃(g)</div>
+                        <div class="reaction-notes"><strong>Thermal Decomposition of Ferrous Sulphate:</strong> Green crystals lose water of crystallization and decompose into reddish-brown ferric oxide ($Fe_2O_3$) accompanied by the choking smell of burning sulfur.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Thermal Decomposition</span><span class="m3-chip">Class 10 Ch 1</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item decomp">
+                        <div class="reaction-eq">2Pb(NO₃)₂(s) —Δ→ 2PbO(s) + 4NO₂(g) + O₂(g)</div>
+                        <div class="reaction-notes"><strong>Thermal Decomposition of Lead Nitrate:</strong> White lead nitrate powder crackles on heating, releasing toxic brown nitrogen dioxide ($NO_2$) fumes and leaving yellow lead monoxide residue ($PbO$).</div>
+                        <div class="reaction-meta"><span class="m3-chip">Gas Evolution</span><span class="m3-chip">Class 10 Ch 1</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item decomp">
+                        <div class="reaction-eq">2AgCl(s) —Sunlight (hν)→ 2Ag(s) + Cl₂(g)</div>
+                        <div class="reaction-notes"><strong>Photochemical Decomposition:</strong> White silver chloride turns grey in sunlight. Foundation of historic black-and-white photography (along with silver bromide $2AgBr \to 2Ag + Br_2$).</div>
+                        <div class="reaction-meta"><span class="m3-chip">Photolytic</span><span class="m3-chip">Class 10 Ch 1</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item decomp">
+                        <div class="reaction-eq">2H₂O(l) —Electrolysis→ 2H₂(g) + O₂(g)</div>
+                        <div class="reaction-notes"><strong>Electrolytic Decomposition of Water:</strong> Acidified water produces hydrogen at the cathode and oxygen at the anode in a $2:1$ volume ratio.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Electrolysis</span><span class="m3-chip">Class 10 Ch 1</span></div>
+                    </div>
+
+                    <!-- Displacement -->
+                    <div class="reaction-item rx-item disp">
+                        <div class="reaction-eq">Fe(s) + CuSO₄(aq) → FeSO₄(aq) + Cu(s)</div>
+                        <div class="reaction-notes"><strong>Single Displacement:</strong> Iron, being more reactive than Copper, displaces it. The intense blue solution turns pale green, and brown copper coats the iron nail.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Displacement</span><span class="m3-chip">Class 8 & 10</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item disp">
+                        <div class="reaction-eq">Na₂SO₄(aq) + BaCl₂(aq) → BaSO₄(s)↓ + 2NaCl(aq)</div>
+                        <div class="reaction-notes"><strong>Double Displacement & Precipitation:</strong> Exchange of ions produces an insoluble white precipitate of Barium Sulphate ($BaSO_4$).</div>
+                        <div class="reaction-meta"><span class="m3-chip">Precipitation</span><span class="m3-chip">Class 10 Ch 1</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item disp">
+                        <div class="reaction-eq">CuO(s) + H₂(g) —Δ→ Cu(s) + H₂O(l)</div>
+                        <div class="reaction-notes"><strong>Redox Reaction:</strong> Black Copper(II) Oxide is reduced to brown Copper ($CuO \to Cu$), while Hydrogen is oxidized to water ($H_2 \to H_2O$).</div>
+                        <div class="reaction-meta"><span class="m3-chip">Redox</span><span class="m3-chip">Class 10 Ch 1</span></div>
+                    </div>
+
+                    <!-- Acids, Bases & Salts -->
+                    <div class="reaction-item rx-item acidbase">
+                        <div class="reaction-eq">Zn(s) + 2NaOH(aq) → Na₂ZnO₂(aq) + H₂(g)↑</div>
+                        <div class="reaction-notes"><strong>Amphoteric Reaction:</strong> Zinc metal reacts with strong base sodium hydroxide to liberate hydrogen gas and form sodium zincate.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Gas Evolution</span><span class="m3-chip">Class 10 Ch 2</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item acidbase">
+                        <div class="reaction-eq">2NaCl(aq) + 2H₂O(l) —Electrolysis→ 2NaOH(aq) + Cl₂(g) + H₂(g)</div>
+                        <div class="reaction-notes"><strong>Chlor-Alkali Process:</strong> Electrolysis of brine yields Chlorine gas at the anode, Hydrogen gas at the cathode, and Sodium Hydroxide solution near the cathode.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Industrial Process</span><span class="m3-chip">Class 10 Ch 2</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item acidbase">
+                        <div class="reaction-eq">Ca(OH)₂(s) + Cl₂(g) → CaOCl₂(s) + H₂O(l)</div>
+                        <div class="reaction-notes"><strong>Bleaching Powder Synthesis:</strong> Dry slaked lime reacts with chlorine to produce calcium oxychloride ($CaOCl_2$), used as a disinfectant and oxidizing agent.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Salt Synthesis</span><span class="m3-chip">Class 10 Ch 2</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item acidbase">
+                        <div class="reaction-eq">2NaHCO₃(s) —Δ→ Na₂CO₃(s) + H₂O(g) + CO₂(g)</div>
+                        <div class="reaction-notes"><strong>Thermal Decomposition of Baking Soda:</strong> Heating sodium hydrogencarbonate generates carbon dioxide gas, causing cake batter to rise.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Thermal</span><span class="m3-chip">Class 10 Ch 2</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item acidbase">
+                        <div class="reaction-eq">CaSO₄·2H₂O(s) —373 K→ CaSO₄·½H₂O(s) + 1½H₂O(g)</div>
+                        <div class="reaction-notes"><strong>Plaster of Paris Formation:</strong> Careful heating of gypsum at 373 K (100°C) produces calcium sulphate hemihydrate. Heating beyond 373 K yields dead burnt plaster ($CaSO_4$).</div>
+                        <div class="reaction-meta"><span class="m3-chip">Hydrate</span><span class="m3-chip">Class 10 Ch 2</span></div>
+                    </div>
+
+                    <!-- Carbon & Organic Reactions -->
+                    <div class="reaction-item rx-item carbon">
+                        <div class="reaction-eq">CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g) + Heat + Light</div>
+                        <div class="reaction-notes"><strong>Combustion of Methane:</strong> Clean blue flame characteristic of saturated hydrocarbons in sufficient oxygen. Saturated hydrocarbons give sooty flames when oxygen is limited.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Combustion</span><span class="m3-chip">Class 10 Ch 4</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item carbon">
+                        <div class="reaction-eq">CH₃CH₂OH —alk. KMnO₄ / acid. K₂Cr₂O₇ + Δ→ CH₃COOH</div>
+                        <div class="reaction-notes"><strong>Oxidation of Ethanol:</strong> Alkaline potassium permanganate or acidified potassium dichromate acts as an oxidizing agent, converting ethanol into ethanoic acid.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Oxidation</span><span class="m3-chip">Class 10 Ch 4</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item carbon">
+                        <div class="reaction-eq">CH₂=CH₂ + H₂ —Ni / Pd catalyst (473 K)→ CH₃—CH₃</div>
+                        <div class="reaction-notes"><strong>Addition Reaction (Hydrogenation):</strong> Unsaturated vegetable oils containing double bonds are hydrogenated into saturated vanaspati ghee using nickel catalyst.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Addition</span><span class="m3-chip">Class 10 Ch 4</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item carbon">
+                        <div class="reaction-eq">CH₄ + Cl₂ —Sunlight (hν)→ CH₃Cl + HCl</div>
+                        <div class="reaction-notes"><strong>Free Radical Substitution:</strong> In the presence of sunlight, chlorine atoms successively replace hydrogen atoms in methane to form chloromethane, dichloromethane, chloroform, and carbon tetrachloride.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Substitution</span><span class="m3-chip">Class 10 Ch 4</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item carbon">
+                        <div class="reaction-eq">CH₃COOH + C₂H₅OH —conc. H₂SO₄→ CH₃COOC₂H₅ + H₂O</div>
+                        <div class="reaction-notes"><strong>Esterification:</strong> Ethanoic acid reacts with ethanol in the presence of an acid catalyst to form ethyl ethanoate, a sweet-smelling ester used in perfumes and flavoring agents.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Esterification</span><span class="m3-chip">Class 10 Ch 4</span></div>
+                    </div>
+
+                    <div class="reaction-item rx-item carbon">
+                        <div class="reaction-eq">CH₃COOC₂H₅ + NaOH → CH₃COONa + C₂H₅OH</div>
+                        <div class="reaction-notes"><strong>Saponification:</strong> Alkaline hydrolysis of an ester with sodium hydroxide yields sodium ethanoate (soap precursor) and ethanol.</div>
+                        <div class="reaction-meta"><span class="m3-chip">Saponification</span><span class="m3-chip">Class 10 Ch 4</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             SECTION 3: ORGANIC CHEMISTRY PROGRESSION (CLASSES 10 TO 12)
+             ========================================================================= -->
+        <section id="view-organic" class="view-content">
+            <div class="m3-card">
+                <div class="m3-card-header">
+                    <div>
+                        <h2 class="m3-card-title">Organic Chemistry Structural Progression</h2>
+                        <p class="m3-card-subtitle">Tracing the evolution of carbon from Class 10 tetravalency up through Class 12 stereochemical mechanisms and synthesis.</p>
+                    </div>
+                    <span class="m3-chip">CURRICULUM CONTINUUM</span>
+                </div>
+
+                <!-- Interactive Carbon Hybridization & Covalency Sandbox -->
+                <div class="interactive-container">
+                    <h3 style="font-size: 1.15rem; font-weight:700; margin-bottom: 0.5rem; color: var(--md-sys-color-primary);">
+                        Interactive Carbon Bonding & Hybridization Engine
+                    </h3>
+                    <p style="font-size: 0.88rem; color: var(--md-sys-color-on-surface-variant); margin-bottom: 1rem;">
+                        Select a hybridization state to examine electron orbital mixing, spatial bond angles, and sigma/pi distribution:
+                    </p>
+
+                    <div class="chips-scroll">
+                        <button class="filter-chip active" onclick="setHybrid('sp3', this)">sp³ (Alkane / Single Bond)</button>
+                        <button class="filter-chip" onclick="setHybrid('sp2', this)">sp² (Alkene / Double Bond)</button>
+                        <button class="filter-chip" onclick="setHybrid('sp', this)">sp (Alkyne / Triple Bond)</button>
+                    </div>
+
+                    <div class="covalency-stage">
+                        <div class="orbital-visualizer">
+                            <div class="orbital-circle-diagram" id="hybridDiagram">
+                                <span style="font-weight: 800; font-size: 1.3rem; color: var(--md-sys-color-primary);">C</span>
+                            </div>
+                            <div id="hybridGeometry" style="font-weight: 700; font-size: 1.05rem; color: var(--md-sys-color-on-surface);">Tetrahedral</div>
+                            <div id="hybridAngle" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--md-sys-color-primary);">Bond Angle: 109.5°</div>
+                        </div>
+
+                        <div style="background: var(--md-sys-color-surface-container-lowest); border-radius: var(--md-shape-corner-large); padding: 1.5rem; border: 1px solid var(--md-sys-color-outline-variant);">
+                            <h4 style="font-size: 1rem; color: var(--md-sys-color-primary); margin-bottom: 0.5rem;">Syllabus Conceptual Integration</h4>
+                            <div id="hybridInfo" style="font-size: 0.88rem; color: var(--md-sys-color-on-surface-variant); line-height: 1.6;">
+                                <strong>Class 10:</strong> Demonstrates tetravalency ($C$ atomic number 6, configuration 2,4). Sharing 4 electrons satisfies octet.<br>
+                                <strong>Class 11:</strong> $2s$ mixes with three $2p$ orbitals yielding 4 equivalent $sp^3$ degenerate hybrid orbitals. Forms 4 $\sigma$-bonds (e.g., Methane $CH_4$, Ethane $C_2H_6$).<br>
+                                <strong>Class 12:</strong> Tetrahedral $sp^3$ carbon with four distinct substituents is chiral (asymmetric), leading to optical activity and inversion in $S_N2$ nucleophilic substitutions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deep Structural Breakdown Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                    
+                    <div style="background: var(--md-sys-color-surface-container-low); border-radius: var(--md-shape-corner-large); padding: 1.5rem; border: 1px solid var(--md-sys-color-outline-variant);">
+                        <span class="m3-chip" style="margin-bottom: 0.8rem;">CLASS 10 FOUNDATIONS</span>
+                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Catenation & Allotropy</h3>
+                        <p style="font-size: 0.88rem; color: var(--md-sys-color-on-surface-variant);">
+                            Carbon forms millions of stable compounds due to two unique attributes:
+                        </p>
+                        <ul style="padding-left: 1.2rem; font-size: 0.85rem; margin-top: 0.5rem; color: var(--md-sys-color-on-surface-variant);">
+                            <li><strong>Catenation:</strong> Strong $C-C$ bond energy ($348 \text{ kJ/mol}$) allows formation of long open and closed rings.</li>
+                            <li><strong>Tetravalency:</strong> Capability to bond with hydrogen, oxygen, nitrogen, and halogens.</li>
+                            <li><strong>Allotropes:</strong> Diamond (3D $sp^3$ rigid tetrahedral network; insulator, hardest substance), Graphite (2D $sp^2$ hexagonal sheets with delocalized electrons; conducts electricity, lubricant), and Buckminsterfullerene ($C_{60}$ soccer ball cage).</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--md-sys-color-surface-container-low); border-radius: var(--md-shape-corner-large); padding: 1.5rem; border: 1px solid var(--md-sys-color-outline-variant);">
+                        <span class="m3-chip" style="margin-bottom: 0.8rem;">CLASS 11 MECHANISMS</span>
+                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Electronic Effects & Intermediates</h3>
+                        <p style="font-size: 0.88rem; color: var(--md-sys-color-on-surface-variant);">
+                            Electronic factors dictating reactivity in organic reactions:
+                        </p>
+                        <ul style="padding-left: 1.2rem; font-size: 0.85rem; margin-top: 0.5rem; color: var(--md-sys-color-on-surface-variant);">
+                            <li><strong>Inductive Effect:</strong> Permanent dipole transmission along a $\sigma$-chain ($-I$: $-NO_2 > -CN > -F > -Cl$; $+I$: $-C(CH_3)_3 > -CH(CH_3)_2 > -CH_3$).</li>
+                            <li><strong>Resonance / Mesomeric:</strong> Delocalization of $\pi$-electrons ($+R$ activates benzene ring towards electrophiles, e.g., $-OH, -NH_2$).</li>
+                            <li><strong>Carbocation Stability:</strong> $3^\circ > 2^\circ > 1^\circ$ governed by hyperconjugation ($\alpha$-C-H bonds) and $+I$ dispersion of positive charge.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--md-sys-color-surface-container-low); border-radius: var(--md-shape-corner-large); padding: 1.5rem; border: 1px solid var(--md-sys-color-outline-variant);">
+                        <span class="m3-chip" style="margin-bottom: 0.8rem;">CLASS 12 ADVANCED</span>
+                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">SN1 vs SN2 & Named Syntheses</h3>
+                        <p style="font-size: 0.88rem; color: var(--md-sys-color-on-surface-variant);">
+                            High-yield mechanistic distinctions and named organic reactions:
+                        </p>
+                        <ul style="padding-left: 1.2rem; font-size: 0.85rem; margin-top: 0.5rem; color: var(--md-sys-color-on-surface-variant);">
+                            <li><strong>SN1:</strong> Two steps via planar carbocation; leads to racemization ($3^\circ > 2^\circ > 1^\circ$).</li>
+                            <li><strong>SN2:</strong> One concerted step via pentacoordinate transition state; 100% Walden inversion ($1^\circ > 2^\circ > 3^\circ$).</li>
+                            <li><strong>Aldol vs Cannizzaro:</strong> Aldehydes with $\alpha$-H form $\beta$-hydroxyaldehydes (Aldol); aldehydes without $\alpha$-H undergo disproportionation (Cannizzaro).</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             SECTION 4: PERIODIC MATRIX (ALL 118 ELEMENTS)
+             ========================================================================= -->
+        <section id="view-ptable" class="view-content">
+            <div class="m3-card">
+                <div class="m3-card-header">
+                    <div>
+                        <h2 class="m3-card-title">Periodic Matrix (Elements 1 to 118)</h2>
+                        <p class="m3-card-subtitle">Complete IUPAC classification with CBSE Class 8–12 integrated notes for every element.</p>
+                    </div>
+                    <span class="m3-chip">FULL 118 SPECTRUM</span>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <input type="text" id="pSearch" class="m3-input" placeholder="Search element by name, symbol, or atomic number Z..." style="max-width: 400px;" oninput="searchElements()">
+                </div>
+
+                <div style="overflow-x: auto; padding: 1rem 0;">
+                    <div id="ptableGrid" style="display: grid; grid-template-columns: repeat(18, minmax(48px, 1fr)); gap: 6px; min-width: 960px;">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Element Detail Popout -->
+                <div id="elementDetailCard" style="background: var(--md-sys-color-surface-container); border-radius: var(--md-shape-corner-large); padding: 1.5rem; margin-top: 1.5rem; border: 1px solid var(--md-sys-color-outline-variant);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div id="detSym" style="width: 60px; height: 60px; border-radius: 12px; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); font-size: 1.8rem; font-weight: 800; display: grid; place-content: center;">Cr</div>
+                        <div>
+                            <h3 id="detName" style="font-size: 1.3rem; font-weight: 800;">Chromium (Z = 24)</h3>
+                            <div id="detMeta" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--md-sys-color-primary);">[Ar] 3d⁵ 4s¹ // Group 6, Period 4</div>
+                        </div>
+                    </div>
+                    <p id="detNotes" style="margin-top: 1rem; font-size: 0.92rem; color: var(--md-sys-color-on-surface-variant); line-height: 1.6;">
+                        Anomalous electronic configuration due to the extra exchange energy and spherical symmetry of the half-filled 3d⁵ subshell. Cr²⁺ is reducing because oxidation to Cr³⁺ yields the stable half-filled t₂g³ crystal-field configuration in aqueous medium.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             SECTION 5: INTERACTIVE LABS & CALCULATORS
+             ========================================================================= -->
+        <section id="view-interactive" class="view-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
+                
+                <!-- LAB 1: Solution Molarity & Dilution Calculator (Class 9, 11, 12) -->
+                <div class="m3-card" style="margin-bottom: 0;">
+                    <span class="m3-chip" style="margin-bottom: 0.8rem;">CLASS 9, 11 & 12 CORE</span>
+                    <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Solution Molarity & Dilution Calculator</h3>
+                    <p style="font-size: 0.85rem; color: var(--md-sys-color-on-surface-variant); margin-bottom: 1rem;">
+                        Calculate molar concentration ($M = \frac{w \times 1000}{M_w \times V_{mL}}$) and dilution equation ($M_1 V_1 = M_2 V_2$).
+                    </p>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div>
+                            <label style="font-size: 0.75rem; font-weight: 700; color: var(--md-sys-color-outline);">SOLUTE MASS (w in grams)</label>
+                            <input type="number" id="soluteMass" class="m3-input" value="40" oninput="calcMolarity()">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.75rem; font-weight: 700; color: var(--md-sys-color-outline);">MOLAR MASS (M_w in g/mol, e.g., NaOH = 40)</label>
+                            <input type="number" id="soluteMw" class="m3-input" value="40" oninput="calcMolarity()">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.75rem; font-weight: 700; color: var(--md-sys-color-outline);">SOLUTION VOLUME (mL)</label>
+                            <input type="number" id="solVolume" class="m3-input" value="1000" oninput="calcMolarity()">
+                        </div>
+                        <div id="molarityResult" style="background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); border-radius: var(--md-shape-corner-medium); padding: 1rem; font-family: var(--font-mono); font-weight: 700; text-align: center; margin-top: 0.5rem;">
+                            Molarity = 1.000 M (1.000 mol/L)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LAB 2: Quantum Spin-Only Magnetic Moment (Class 11 & 12) -->
+                <div class="m3-card" style="margin-bottom: 0;">
+                    <span class="m3-chip" style="margin-bottom: 0.8rem;">CLASS 11 & 12 QUANTUM</span>
+                    <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Spin-Only Magnetic Moment Engine</h3>
+                    <p style="font-size: 0.85rem; color: var(--md-sys-color-on-surface-variant); margin-bottom: 1rem;">
+                        Evaluate paramagnetic behavior via $\mu = \sqrt{n(n+2)}\text{ Bohr Magnetons (BM)}$.
+                    </p>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div>
+                            <label style="font-size: 0.75rem; font-weight: 700; color: var(--md-sys-color-outline);">UNPAIRED ELECTRONS (n = 0 to 5)</label>
+                            <input type="number" id="unpairedN" class="m3-input" min="0" max="5" value="3" oninput="calcMagnetic()">
+                        </div>
+                        <div id="magneticResult" style="background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); border-radius: var(--md-shape-corner-medium); padding: 1.2rem; font-family: var(--font-mono); font-weight: 700; text-align: center; line-height: 1.5; margin-top: 1.2rem;">
+                            μ = √[3(5)] = 3.87 BM<br>
+                            <span style="font-size: 0.8rem; font-weight: 500;">Status: Paramagnetic (e.g., Cr³⁺, V²⁺)</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Material 3 Footer with chillriot astronomy & GNU AGPLv3 -->
+    <footer>
+        <div class="footer-logo">KEM<span style="color: var(--md-sys-color-primary);">!</span>STRY</div>
+        <div>&copy; 2026 chillriot astronomy. All rights reserved.</div>
+        <div class="agpl-notice">
+            Licensed under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer">GNU Affero General Public License v3.0 (GNU AGPLv3)</a>.
+            Free, libre, and open-source chemistry education architecture aligned with the NCERT curriculum (Classes 8 through 12).
+        </div>
+    </footer>
+
+    <script>
+        // =========================================================================
+        // VIEW NAVIGATION
+        // =========================================================================
+        function navigateTab(tabId, el) {
+            document.querySelectorAll('.nav-pill').forEach(btn => btn.classList.remove('active'));
+            el.classList.add('active');
+
+            document.querySelectorAll('.view-content').forEach(view => view.classList.remove('active'));
+            document.getElementById(`view-${tabId}`).classList.add('active');
+        }
+
+        // =========================================================================
+        // ACCORDION EXPANSION
+        // =========================================================================
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const isOpen = content.classList.contains('open');
+            content.classList.toggle('open', !isOpen);
+            btn.querySelector('span:last-child').innerText = isOpen ? '▾' : '▴';
+        }
+
+        function filterClassSummaries(cls, btn) {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.sum-item').forEach(item => {
+                if (cls === 'all' || item.classList.contains(cls)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // =========================================================================
+        // REACTIONS FILTER
+        // =========================================================================
+        function filterReactions(type, btn) {
+            btn.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.rx-item').forEach(item => {
+                if (type === 'all' || item.classList.contains(type)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // =========================================================================
+        // ORGANIC HYBRIDIZATION SANDBOX
+        // =========================================================================
+        const hybridData = {
+            sp3: {
+                geom: "Tetrahedral",
+                angle: "Bond Angle: 109.5°",
+                diagram: "4 σ-bonds",
+                info: `<strong>Class 10:</strong> Demonstrates tetravalency ($C$ atomic number 6, configuration 2,4). Sharing 4 electrons satisfies octet.<br>
+                       <strong>Class 11:</strong> $2s$ mixes with three $2p$ orbitals yielding 4 equivalent $sp^3$ degenerate hybrid orbitals. Forms 4 $\sigma$-bonds (e.g., Methane $CH_4$, Ethane $C_2H_6$).<br>
+                       <strong>Class 12:</strong> Tetrahedral $sp^3$ carbon with four distinct substituents is chiral (asymmetric), leading to optical activity and inversion in $S_N2$ nucleophilic substitutions.`
+            },
+            sp2: {
+                geom: "Trigonal Planar",
+                angle: "Bond Angle: 120°",
+                diagram: "3 σ + 1 π",
+                info: `<strong>Class 10:</strong> Forms double bond in alkenes ($CH_2=CH_2$), undergoing characteristic addition reactions (e.g., hydrogenation into vegetable ghee).<br>
+                       <strong>Class 11:</strong> $2s$ mixes with two $2p$ orbitals; unhybridized pure $2p_z$ orbital overlaps laterally to form a weaker $\pi$-bond ($C=C$ bond length $134\text{ pm}$). Responsible for geometric cis-trans isomerism.<br>
+                       <strong>Class 12:</strong> Carbonyl carbons ($>C=O$) are $sp^2$ planar, making them susceptible to nucleophilic attack from both top and bottom faces.`
+            },
+            sp: {
+                geom: "Linear",
+                angle: "Bond Angle: 180°",
+                diagram: "2 σ + 2 π",
+                info: `<strong>Class 10:</strong> Forms triple bond in alkynes ($CH \equiv CH$, ethyne/acetylene used in oxy-acetylene welding).<br>
+                       <strong>Class 11:</strong> $2s$ mixes with one $2p$ orbital with 50% s-character. High electronegativity of $sp$ carbon makes terminal alkynes acidic ($RC \equiv CH + NaNH_2 \to RC \equiv C^-Na^+$).<br>
+                       <strong>Class 12:</strong> Nitriles ($R-C \equiv N$) undergo partial hydrolysis to amides and complete hydrolysis to carboxylic acids.`
+            }
+        };
+
+        function setHybrid(type, btn) {
+            btn.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+
+            const data = hybridData[type];
+            document.getElementById('hybridGeometry').innerText = data.geom;
+            document.getElementById('hybridAngle').innerText = data.angle;
+            document.getElementById('hybridInfo').innerHTML = data.info;
+            document.getElementById('hybridDiagram').innerHTML = `<span style="font-weight: 800; font-size: 1.1rem; color: var(--md-sys-color-primary);">${data.diagram}</span>`;
+        }
+
+        // =========================================================================
+        // ALL 118 ELEMENTS GENERATOR & PERIODIC MATRIX
+        // =========================================================================
+        const elements118 = [
+            { z: 1, sym: "H", name: "Hydrogen", mass: 1.008, p: 1, g: 1, conf: "1s¹", notes: "Standard reference electrode (SHE = 0.00 V). Can act like alkali metal or halogen." },
+            { z: 2, sym: "He", name: "Helium", mass: 4.003, p: 1, g: 18, conf: "1s²", notes: "Bohr 1st shell complete. Used in deep sea diver oxygen tanks (Henry's law application)." },
+            { z: 3, sym: "Li", name: "Lithium", mass: 6.94, p: 2, g: 1, conf: "[He] 2s¹", notes: "Highest negative reduction potential (-3.05 V) due to highest hydration enthalpy." },
+            { z: 4, sym: "Be", name: "Beryllium", mass: 9.012, p: 2, g: 2, conf: "[He] 2s²", notes: "IE₁ > B due to completely filled 2s² subshell." },
+            { z: 5, sym: "B", name: "Boron", mass: 10.81, p: 2, g: 13, conf: "[He] 2s² 2p¹", notes: "Forms electron-deficient BF₃ (Lewis acid)." },
+            { z: 6, sym: "C", name: "Carbon", mass: 12.011, p: 2, g: 14, conf: "[He] 2s² 2p²", notes: "Forms millions of compounds via catenation and tetravalency." },
+            { z: 7, sym: "N", name: "Nitrogen", mass: 14.007, p: 2, g: 15, conf: "[He] 2s² 2p³", notes: "IE₁ > O due to stable exactly half-filled 2p³ subshell." },
+            { z: 8, sym: "O", name: "Oxygen", mass: 15.999, p: 2, g: 16, conf: "[He] 2s² 2p⁴", notes: "Supporter of combustion; forms oxides with metals & non-metals." },
+            { z: 9, sym: "F", name: "Fluorine", mass: 18.998, p: 2, g: 17, conf: "[He] 2s² 2p⁵", notes: "Most electronegative element on the Pauling scale (4.0)." },
+            { z: 10, sym: "Ne", name: "Neon", mass: 20.18, p: 2, g: 18, conf: "[He] 2s² 2p⁶", notes: "Stable closed octet valence shell." },
+            { z: 11, sym: "Na", name: "Sodium", mass: 22.99, p: 3, g: 1, conf: "[Ne] 3s¹", notes: "Stored in kerosene; forms basic oxide Na₂O." },
+            { z: 12, sym: "Mg", name: "Magnesium", mass: 24.31, p: 3, g: 2, conf: "[Ne] 3s²", notes: "Burns in air with dazzling white flame to form MgO." },
+            { z: 13, sym: "Al", name: "Aluminium", mass: 26.98, p: 3, g: 13, conf: "[Ne] 3s² 3p¹", notes: "Forms amphoteric oxide Al₂O₃ that reacts with acids and bases." },
+            { z: 14, sym: "Si", name: "Silicon", mass: 28.09, p: 3, g: 14, conf: "[Ne] 3s² 3p²", notes: "Metalloid; backbone of semiconductor devices." },
+            { z: 15, sym: "P", name: "Phosphorus", mass: 30.97, p: 3, g: 15, conf: "[Ne] 3s² 3p³", notes: "Stored under water; forms PCl₃ and PCl₅ chlorinating agents." },
+            { z: 16, sym: "S", name: "Sulfur", mass: 32.06, p: 3, g: 16, conf: "[Ne] 3s² 3p⁴", notes: "Forms acidic oxides SO₂ and SO₃; essential in sulfuric acid manufacture." },
+            { z: 17, sym: "Cl", name: "Chlorine", mass: 35.45, p: 3, g: 17, conf: "[Ne] 3s² 3p⁵", notes: "Higher negative electron gain enthalpy than Fluorine due to larger 3p size." },
+            { z: 18, sym: "Ar", name: "Argon", mass: 39.95, p: 3, g: 18, conf: "[Ne] 3s² 3p⁶", notes: "Inert gas; isobar of ⁴⁰Ca and ⁴⁰K." },
+            { z: 19, sym: "K", name: "Potassium", mass: 39.10, p: 4, g: 1, conf: "[Ar] 4s¹", notes: "Top of reactivity series; reacts violently with cold water." },
+            { z: 20, sym: "Ca", name: "Calcium", mass: 40.08, p: 4, g: 2, conf: "[Ar] 4s²", notes: "Requisite component of limestone, quicklime, and slaked lime." },
+            { z: 21, sym: "Sc", name: "Scandium", mass: 44.96, p: 4, g: 3, conf: "[Ar] 3d¹ 4s²", notes: "Sc³⁺ is colorless and diamagnetic due to empty 3d⁰ subshell." },
+            { z: 22, sym: "Ti", name: "Titanium", mass: 47.87, p: 4, g: 4, conf: "[Ar] 3d² 4s²", notes: "Ti³⁺ is purple due to d¹ d-d transition; Ti⁴⁺ is colorless (d⁰)." },
+            { z: 23, sym: "V", name: "Vanadium", mass: 50.94, p: 4, g: 5, conf: "[Ar] 3d³ 4s²", notes: "V₂O₅ catalyst used in Contact Process for H₂SO₄." },
+            { z: 24, sym: "Cr", name: "Chromium", mass: 52.00, p: 4, g: 6, conf: "[Ar] 3d⁵ 4s¹", notes: "Anomalous half-filled configuration. Cr²⁺ is reducing to form stable t₂g³ (Cr³⁺)." },
+            { z: 25, sym: "Mn", name: "Manganese", mass: 54.94, p: 4, g: 7, conf: "[Ar] 3d⁵ 4s²", notes: "Exhibits maximum oxidation states (+2 to +7). MnO₄⁻ is colored by charge transfer." },
+            { z: 26, sym: "Fe", name: "Iron", mass: 55.85, p: 4, g: 8, conf: "[Ar] 3d⁶ 4s²", notes: "Rusting requires both oxygen and water. High spin Fe³⁺ has 5 unpaired electrons (5.92 BM)." },
+            { z: 27, sym: "Co", name: "Cobalt", mass: 58.93, p: 4, g: 9, conf: "[Ar] 3d⁷ 4s²", notes: "Forms stable diamagnetic low-spin complexes with strong field ligands like NH₃." },
+            { z: 28, sym: "Ni", name: "Nickel", mass: 58.69, p: 4, g: 10, conf: "[Ar] 3d⁸ 4s²", notes: "[Ni(CN)₄]²⁻ is square planar & diamagnetic (dsp²); [NiCl₄]²⁻ is tetrahedral (sp³)." },
+            { z: 29, sym: "Cu", name: "Copper", mass: 63.55, p: 4, g: 11, conf: "[Ar] 3d¹⁰ 4s¹", notes: "Only 3d metal with positive E°(+0.34 V); Cu²⁺ is blue (d⁹)." },
+            { z: 30, sym: "Zn", name: "Zinc", mass: 65.38, p: 4, g: 12, conf: "[Ar] 3d¹⁰ 4s²", notes: "Not considered a true transition element by IUPAC (d¹⁰ in both atom and Zn²⁺)." }
+        ];
+
+        // Fill elements up to 118
+        const fullSymbols = ["Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"];
+        const fullNames = ["Gallium","Germanium","Arsenic","Selenium","Bromine","Krypton","Rubidium","Strontium","Yttrium","Zirconium","Niobium","Molybdenum","Technetium","Ruthenium","Rhodium","Palladium","Silver","Cadmium","Indium","Tin","Antimony","Tellurium","Iodine","Xenon","Caesium","Barium","Lanthanum","Cerium","Praseodymium","Neodymium","Promethium","Samarium","Europium","Gadolinium","Terbium","Dysprosium","Holmium","Erbium","Thulium","Ytterbium","Lutetium","Hafnium","Tantalum","Tungsten","Rhenium","Osmium","Iridium","Platinum","Gold","Mercury","Thallium","Lead","Bismuth","Polonium","Astatine","Radon","Francium","Radium","Actinium","Thorium","Protactinium","Uranium","Neptunium","Plutonium","Americium","Curium","Berkelium","Californium","Einsteinium","Fermium","Mendelevium","Nobelium","Lawrencium","Rutherfordium","Dubnium","Seaborgium","Bohrium","Hassium","Meitnerium","Darmstadtium","Roentgenium","Copernicium","Nihonium","Flerovium","Moscovium","Livermorium","Tennessine","Oganesson"];
+
+        for (let i = 31; i <= 118; i++) {
+            const sym = fullSymbols[i - 31];
+            const name = fullNames[i - 31];
+            let p = i > 86 ? 7 : (i > 54 ? 6 : (i > 36 ? 5 : 4));
+            let g = (i % 18) || 18;
+            let notes = `Element ${name} (Z = ${i}). Studied within CBSE Class 11/12 periodic periodicity & inorganic units.`;
+
+            if (sym === "Zr") notes = "Atomic radius (160 pm) is almost identical to Hafnium (159 pm) due to Lanthanoid Contraction.";
+            if (sym === "Hf") notes = "Lanthanoid Contraction causes Hafnium to have nearly identical radius to Zirconium.";
+            if (sym === "Pt") notes = "Forms Cisplatin, cis-[Pt(NH₃)₂Cl₂], a renowned square-planar anticancer complex.";
+            if (sym === "Ce") notes = "Ce⁴⁺ is a powerful analytical oxidizing agent, reducing to stable Ce³⁺.";
+            if (sym === "U") notes = "Forms uranyl ion UO₂²⁺; major fissile fuel in nuclear chemistry.";
+
+            elements118.push({
+                z: i,
+                sym: sym,
+                name: name,
+                mass: (i * 2.3).toFixed(1),
+                p: p,
+                g: g,
+                conf: `[Core] Z=${i}`,
+                notes: notes
+            });
+        }
+
+        function renderPeriodicMatrix() {
+            const grid = document.getElementById('ptableGrid');
+            grid.innerHTML = '';
+
+            elements118.forEach(elem => {
+                const node = document.createElement('div');
+                node.style.border = '1px solid var(--md-sys-color-outline-variant)';
+                node.style.borderRadius = '8px';
+                node.style.padding = '4px 2px';
+                node.style.textAlign = 'center';
+                node.style.cursor = 'pointer';
+                node.style.background = 'var(--md-sys-color-surface-container-low)';
+                node.style.userSelect = 'none';
+                node.id = `pel-${elem.z}`;
+                node.onclick = () => showElementDetail(elem);
+
+                let row = elem.p;
+                let col = elem.g;
+
+                if (elem.z >= 57 && elem.z <= 71) {
+                    row = 9;
+                    col = (elem.z - 57) + 3;
+                } else if (elem.z >= 89 && elem.z <= 103) {
+                    row = 10;
+                    col = (elem.z - 89) + 3;
+                }
+
+                node.style.gridRow = row;
+                node.style.gridColumn = col;
+
+                node.innerHTML = `
+                    <div style="font-size:0.6rem; color:var(--md-sys-color-outline); font-family:var(--font-mono);">${elem.z}</div>
+                    <div style="font-size:0.95rem; font-weight:800; color:var(--md-sys-color-primary);">${elem.sym}</div>
+                `;
+
+                grid.appendChild(node);
+            });
+        }
+
+        function showElementDetail(elem) {
+            document.querySelectorAll('#ptableGrid > div').forEach(d => d.style.borderColor = 'var(--md-sys-color-outline-variant)');
+            const elNode = document.getElementById(`pel-${elem.z}`);
+            if (elNode) elNode.style.borderColor = 'var(--md-sys-color-primary)';
+
+            document.getElementById('detSym').innerText = elem.sym;
+            document.getElementById('detName').innerText = `${elem.name} (Z = ${elem.z})`;
+            document.getElementById('detMeta').innerText = `${elem.conf} // Period ${elem.p}, Group ${elem.g} (${elem.mass} u)`;
+            document.getElementById('detNotes').innerText = elem.notes;
+        }
+
+        function searchElements() {
+            const query = document.getElementById('pSearch').value.toLowerCase().trim();
+            elements118.forEach(item => {
+                const node = document.getElementById(`pel-${item.z}`);
+                if (!node) return;
+                const match = item.name.toLowerCase().includes(query) || item.sym.toLowerCase().includes(query) || item.z.toString() === query;
+                node.style.opacity = match ? '1' : '0.15';
+            });
+        }
+
+        // =========================================================================
+        // CALCULATORS
+        // =========================================================================
+        function calcMolarity() {
+            const w = parseFloat(document.getElementById('soluteMass').value) || 0;
+            const mw = parseFloat(document.getElementById('soluteMw').value) || 1;
+            const v = parseFloat(document.getElementById('solVolume').value) || 1;
+            const m = (w * 1000) / (mw * v);
+            document.getElementById('molarityResult').innerText = `Molarity = ${m.toFixed(3)} M (${m.toFixed(3)} mol/L)`;
+        }
+
+        function calcMagnetic() {
+            const n = parseFloat(document.getElementById('unpairedN').value) || 0;
+            const res = document.getElementById('magneticResult');
+            if (n === 0) {
+                res.innerHTML = `μ = 0.00 BM<br><span style="font-size:0.8rem; font-weight:500;">Status: Diamagnetic (No unpaired electrons)</span>`;
+            } else {
+                const mu = Math.sqrt(n * (n + 2)).toFixed(2);
+                res.innerHTML = `μ = √[${n}(${n + 2})] = ${mu} BM<br><span style="font-size:0.8rem; font-weight:500;">Status: Strongly Paramagnetic</span>`;
+            }
+        }
+
+        window.onload = () => {
+            renderPeriodicMatrix();
+            showElementDetail(elements118[23]); // Cr default
+            calcMolarity();
+            calcMagnetic();
+        };
+    </script>
+</body>
+</html>
